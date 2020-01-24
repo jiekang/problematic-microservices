@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   Copyright (C) 2018 Marcus Hirt
                      www.hirt.se
@@ -30,9 +30,7 @@
   
   Copyright (C) Marcus Hirt, 2018
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>se.hirt.examples</groupId>
 	<artifactId>robotshop-factory-service</artifactId>
@@ -116,7 +114,7 @@
 				<version>2.0.0</version>
 				<configuration>
 					<extraJvmArguments>-Xms128m</extraJvmArguments>
-					<assembleDirectory>target</assembleDirectory>
+					<assembleDirectory>target/app</assembleDirectory>
 					<programs>
 						<program>
 							<mainClass>se.hirt.examples.robotshop.factory.Main</mainClass>
@@ -130,6 +128,32 @@
 						<goals>
 							<goal>assemble</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>se.hirt.examples.robotshop.factory.Main</Main-Class>
+										<Multi-Release>true</Multi-Release>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+							<outputFile>
+                ${project.build.directory}/${project.artifactId}-${project.version}-fat.jar
+              </outputFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
