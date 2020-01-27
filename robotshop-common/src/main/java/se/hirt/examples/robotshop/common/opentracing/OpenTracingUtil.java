@@ -130,8 +130,8 @@ public class OpenTracingUtil {
 		if ("jaeger".equals(tracerName)) {
 			SamplerConfiguration samplerConfig = new SamplerConfiguration().withType(ConstSampler.TYPE).withParam(1);
 			SenderConfiguration senderConfig = new SenderConfiguration()
-					.withAgentHost(configuration.getProperty("jaeger.reporter.host"))
-					.withAgentPort(Integer.decode(configuration.getProperty("jaeger.reporter.port")));
+					.withAgentHost(Utils.getEnvWithDefault("JAEGER_HOST", configuration.getProperty("jaeger.reporter.host")))
+					.withAgentPort(Integer.decode(Utils.getEnvWithDefault("JAEGER_PORT", configuration.getProperty("jaeger.reporter.port"))));
 			ReporterConfiguration reporterConfig = new ReporterConfiguration().withLogSpans(true)
 					.withFlushInterval(1000).withMaxQueueSize(10000).withSender(senderConfig);
 			tracer = new Configuration(serviceName).withSampler(samplerConfig).withReporter(reporterConfig).getTracer();

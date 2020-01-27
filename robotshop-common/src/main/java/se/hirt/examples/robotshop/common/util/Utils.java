@@ -80,6 +80,14 @@ public class Utils {
 		return builder;
 	}
 
+	public static String getEnvWithDefault(String env, String def) {
+		String s = System.getenv(env);
+		if (s != null && s.length() > 0) {
+			return s;
+		}
+		return def;
+	}
+
 	/**
 	 * Sets up java.util.logging according to our settings.
 	 */

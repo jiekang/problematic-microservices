@@ -57,7 +57,13 @@ public class Main {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws ServletException, LifecycleException {
 		OpenTracingUtil.configureOpenTracing("RobotShop-Order-Service");
-		String webappDirLocation = "src/main/webapp/";
+
+		String base = "";
+		if (args.length > 0 && args[0] != null) {
+			base = args[0];
+		}
+
+		String webappDirLocation = base + "src/main/webapp/";
 		Tomcat tomcat = new Tomcat();
 
 		String webPort = System.getenv("PORT");
@@ -68,7 +74,7 @@ public class Main {
 		tomcat.setPort(Integer.valueOf(webPort));
 
 		StandardContext ctx = (StandardContext) tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
-		System.out.println("Basedir: " + new File("./" + webappDirLocation).getAbsolutePath());
+		System.out.println("Basedir: " + new File(webappDirLocation).getAbsolutePath());
 		File additionWebInfClasses = new File("target/classes");
 		WebResourceRoot resources = new StandardRoot(ctx);
 		resources.addPreResources(

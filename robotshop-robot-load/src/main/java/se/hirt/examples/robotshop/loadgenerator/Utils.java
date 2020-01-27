@@ -49,4 +49,12 @@ public class Utils {
 		}
 		return props;
 	}
+
+	public static String getEnvWithDefault(String env, String def) {
+		String s = System.getenv(env);
+		if (s != null && s.length() > 0) {
+			return s;
+		}
+		return def;
+	}
 }

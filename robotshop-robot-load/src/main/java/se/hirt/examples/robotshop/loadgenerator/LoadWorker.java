@@ -101,9 +101,9 @@ public class LoadWorker implements Runnable {
 	}
 
 	public LoadWorker(Properties configuration) {
-		urlCustomer = configuration.getProperty("urlCustomerService");
-		urlFactory = configuration.getProperty("urlFactoryService");
-		urlOrder = configuration.getProperty("urlOrderService");
+		urlCustomer = Utils.getEnvWithDefault("CUSTOMER_SERVICE_LOCATION", configuration.getProperty("urlCustomerService"));
+		urlFactory = Utils.getEnvWithDefault("FACTORY_SERVICE_LOCATION", configuration.getProperty("urlFactoryService"));
+		urlOrder = Utils.getEnvWithDefault("ORDER_SERVICE_LOCATION", configuration.getProperty("urlOrderService"));
 		minRobotsPerOrder = Integer.parseInt(configuration.getProperty("minRobotsPerOrder", "3"));
 		maxRobotsPerOrder = Integer.parseInt(configuration.getProperty("maxRobotsPerOrder", "10"));
 		validate();
